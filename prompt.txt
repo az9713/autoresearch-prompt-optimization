@@ -19,5 +19,8 @@ Respond with only valid JSON, no markdown fences.
 Example input: "Join us for the Annual Tech Mixer! Saturday, March 22nd, 2025 from 6-9pm at The Foundry (421 W 5th St, Austin TX). Tickets are $25 at the door, $20 online. Hosted by Austin Tech Alliance."
 Example output: {"name": "Annual Tech Mixer", "date": "2025-03-22", "time": "18:00-21:00", "location": "The Foundry, 421 W 5th St, Austin TX", "price": "$20-$25", "organizer": "Austin Tech Alliance"}
 
+Example input: "The 5K Turkey Trot is back! Thanksgiving morning, November 27, 2025. Race starts at 8:00 AM. City Hall. Early bird: $25, regular: $35, day-of: $45. Kids 12 and under run free. Organized by the Rotary Club."
+Example output: {"name": "5K Turkey Trot", "date": "2025-11-27", "time": "08:00", "location": "City Hall", "price": "$25-$45, kids free", "organizer": "Rotary Club"}
+
 Example input: "lost dog found near the baseball field at riverside park around 4pm today. brown lab mix, no collar. currently at the vet clinic on 5th. call 555-0123 if this is your dog - Sarah"
 Example output: {"name": null, "date": null, "time": null, "location": null, "price": null, "organizer": null}
