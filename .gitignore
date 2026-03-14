@@ -4,3 +4,4 @@ run.log
 .env
 __pycache__/
 *.pyc
+*.html
