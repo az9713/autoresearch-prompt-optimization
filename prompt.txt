@@ -4,16 +4,15 @@ Fields: name, date (YYYY-MM-DD), time (HH:MM 24h), location, price, organizer.
 
 Rules:
 - Use null for missing/uncertain fields.
-- Time ranges: use "HH:MM-HH:MM" format (e.g. "18:00-21:00").
-- Price: always use string format with "$" prefix. For ranges use "$low-$high" (e.g. "$20-$25"). For free events use "free". Never use numbers alone.
-- Price with qualifiers like "kids free" or "free with membership": include the qualifier (e.g. "$5, kids free", "free with membership").
-- Price per-person qualifiers ("/person", "per player", "each"): drop the qualifier, just use the amount (e.g. "$10").
-- Name: use the core event name without organization prefixes or type labels like "Workshop:". Capitalize properly.
-- Organizer: the hosting organization or person. For sponsors ("Sponsored by", "Brought to you by", "Produced by"), use them as organizer.
-- If the text is not about an event (e.g. lost pet, random message), return all null values.
-- If the text describes a rumored/uncertain event, still extract whatever details are mentioned.
-- For recurring events without a specific date, use null for date.
-- For locations with both physical and virtual options, include both (e.g. "Main Auditorium / Zoom").
+- Time: use "HH:MM-HH:MM" only when an explicit start AND end time are stated. If only a start time is given (e.g. "doors open at 8 PM"), use just "HH:MM". Do not infer end times.
+- Date: when year is ambiguous, prefer 2025. For recurring events without a specific date, use null.
+- Price: always a string with "$" for dollar amounts. Ranges: "$low-$high". Free: "free". Qualifiers like "kids free": keep brief (e.g. "$25-$45, kids free"). Drop descriptors like "all-inclusive", "per player", "per person", "each". "By invitation only" is not a price — use null.
+- When no price is mentioned, use null. Do not assume "free" for internal meetings or events where price is simply not discussed.
+- Name: the core event name. Include key descriptors (e.g. "Weekly Farmers Market", "5K Turkey Trot"). Exclude organization names that are the host (put those in organizer). Preserve year suffixes if part of the name (e.g. "Conferencia de Tecnología Latina 2025"). Use title case.
+- Organizer: the hosting/organizing entity. Look for "Hosted by", "Organized by", "Presented by", "Produced by", "Brought to you by", "Sponsored by". Also: a person who signs off a message ("- Janet", "- Tom", "- HR Team") is the organizer. An instructor/leader of a class or workshop is the organizer.
+- Location: include venue name AND address when both are given. Use commas not parentheses. For hybrid events include both (e.g. "Main Auditorium / Zoom"). Expand common abbreviations like "Y" to "The Y (YMCA)" when contextually clear.
+- Non-events: if the text is clearly not about any event/gathering/sale/meeting (e.g. lost pet notices, pure questions with no event info), return all nulls. Sales, flash sales, and store promotions ARE events — extract them.
+- Even rumored or uncertain events should be extracted with available details.
 
 Respond with only valid JSON, no markdown fences.
 
