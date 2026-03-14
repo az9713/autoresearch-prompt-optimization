@@ -31,8 +31,8 @@ COST_TABLE = {
 }
 
 DEFAULT_MODELS = {
-    "gemini": "gemini-2.0-flash",
-    "openrouter": "google/gemini-2.0-flash-exp:free",
+    "gemini": "gemini-2.5-flash",
+    "openrouter": "google/gemini-2.5-flash",
     "anthropic": "claude-haiku-4-5-20251001",
 }
 
@@ -210,6 +210,11 @@ def main():
         total_output_tokens += out_tok
 
         actual = parse_json_response(raw_response)
+        # If model returned a list, take the first dict element
+        if isinstance(actual, list):
+            actual = actual[0] if actual and isinstance(actual[0], dict) else None
+        if not isinstance(actual, dict):
+            actual = None
         if actual is None:
             parse_errors += 1
             field_scores = {f: 0.0 for f in FIELDS}
